@@ -37,6 +37,21 @@ const getExercises = async (req, res) => {
     }
 };
 
+const viewRecentWorkouts = async (req, res) => {
+    try {
+        const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+        const recentWorkouts = await Log.find({
+            date: { $gte: twentyFourHoursAgo }
+        });
+        if (recentWorkouts.length > 0) {
+            res.status(200).json(recentWorkouts);
+        } else {
+            res.status(404).json({ message: 'No workouts logged in the last 24 hours' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
 
 const addExercise = async (req, res) => {
     try {
@@ -46,29 +61,20 @@ const addExercise = async (req, res) => {
             return res.status(400).json({ message: 'Muscle group and exercise are required.' });
         }
 
-        // Convert muscleGroup to lowercase for consistency
+        // 
         const lowerCaseMuscleGroup = muscleGroup.toLowerCase();
-
-        // Find the exercise list document
         let exerciseList = await ExerciseList.findOne();
 
         if (!exerciseList) {
-            // If no document exists, create a new one
             exerciseList = new ExerciseList({
                 muscleGroups: {}
             });
         }
-
-        // Add the new exercise to the specified muscle group
         if (!exerciseList.muscleGroups[lowerCaseMuscleGroup]) {
             exerciseList.muscleGroups[lowerCaseMuscleGroup] = [];
         }
-
         exerciseList.muscleGroups[lowerCaseMuscleGroup].push(exercise);
-
-        // Save the updated document
         await exerciseList.save();
-
         res.status(201).json({ message: 'Exercise added successfully', exerciseList });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
@@ -78,6 +84,7 @@ const addExercise = async (req, res) => {
 module.exports={
     getExercises,
     logExercise,
-    addExercise
+    addExercise,
+    viewRecentWorkouts
 
 }
