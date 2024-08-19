@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "35a85d34-6372-43d0-9e07-6baf3b20a082",
+		"name": "Fitness",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37736710"
+	},
+	"item": [
+		{
+			"name": "searchExercise",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://fitness-tracker-backend-ebens-projects-2cb58533.vercel.app/api/v1/fitness/GetExcercise/back",
+					"protocol": "https",
+					"host": [
+						"fitness-tracker-backend-ebens-projects-2cb58533",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"api",
+						"v1",
+						"fitness",
+						"GetExcercise",
+						"back"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "log workout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"exercise\": \"DeadLift\",\n    \"weight\": 165,\n    \"reps\": 5,\n    \"muscleGroup\": \"back\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fitness-tracker-backend-five.vercel.app/api/v1/fitness/LogExcercise/",
+					"protocol": "https",
+					"host": [
+						"fitness-tracker-backend-five",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"api",
+						"v1",
+						"fitness",
+						"LogExcercise",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Workout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://fitness-tracker-backend-five.vercel.app/api/v1/fitness/viewWorkouts",
+					"protocol": "https",
+					"host": [
+						"fitness-tracker-backend-five",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"api",
+						"v1",
+						"fitness",
+						"viewWorkouts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Muscle Groups",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://fitness-tracker-backend-five.vercel.app/api/v1/fitness/muscleGroups",
+					"protocol": "https",
+					"host": [
+						"fitness-tracker-backend-five",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"api",
+						"v1",
+						"fitness",
+						"muscleGroups"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
