@@ -23,6 +23,20 @@ const logExercise = async (req, res) => {
     }
 };
 
+const getMuscleGroups = async (req, res) => {
+    try {
+        const exerciseList = await ExerciseList.findOne();
+        if (!exerciseList) {
+            return res.status(404).json({ message: 'No muscle groups found' });
+        }
+        const muscleGroupNames = Object.keys(exerciseList.muscleGroups);
+        res.json(muscleGroupNames);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 const getExercises = async (req, res) => {
     try {
         const muscleGroup = req.params.muscleGroup.toLowerCase();
@@ -37,54 +51,26 @@ const getExercises = async (req, res) => {
     }
 };
 
-const viewRecentWorkouts = async (req, res) => {
+const viewAllWorkouts = async (req, res) => {
     try {
-        const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-        const recentWorkouts = await Log.find({
-            date: { $gte: twentyFourHoursAgo }
-        });
-        if (recentWorkouts.length > 0) {
-            res.status(200).json(recentWorkouts);
+        // Fetch all workouts from the database
+        const allWorkouts = await Log.find({});
+        if (allWorkouts.length > 0) {
+            res.status(200).json(allWorkouts);
         } else {
-            res.status(404).json({ message: 'No workouts logged in the last 24 hours' });
+            res.status(404).json({ message: 'No workouts found' });
         }
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
 
-const addExercise = async (req, res) => {
-    try {
-        const { muscleGroup, exercise } = req.body;
 
-        if (!muscleGroup || !exercise) {
-            return res.status(400).json({ message: 'Muscle group and exercise are required.' });
-        }
-
-        // 
-        const lowerCaseMuscleGroup = muscleGroup.toLowerCase();
-        let exerciseList = await ExerciseList.findOne();
-
-        if (!exerciseList) {
-            exerciseList = new ExerciseList({
-                muscleGroups: {}
-            });
-        }
-        if (!exerciseList.muscleGroups[lowerCaseMuscleGroup]) {
-            exerciseList.muscleGroups[lowerCaseMuscleGroup] = [];
-        }
-        exerciseList.muscleGroups[lowerCaseMuscleGroup].push(exercise);
-        await exerciseList.save();
-        res.status(201).json({ message: 'Exercise added successfully', exerciseList });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
-    }
-};
 
 module.exports={
     getExercises,
     logExercise,
-    addExercise,
-    viewRecentWorkouts
+    viewAllWorkouts,
+    getMuscleGroups
 
 }
