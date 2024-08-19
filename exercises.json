@@ -1,0 +1,46 @@
+{
+    "muscleGroups": {
+        "chest": [
+            "Bench Press",
+            "Push-Ups",
+            "Incline Dumbbell Press",
+            "Chest Flyes"
+        ],
+        "back": [
+            "Deadlift",
+            "Pull-Ups",
+            "Bent Over Row",
+            "Lat Pulldown"
+        ],
+        "triceps": [
+            "Tricep Dips",
+            "Skull Crushers",
+            "Tricep Pushdown",
+            "Close-Grip Bench Press"
+        ],
+        "biceps": [
+            "Bicep Curl",
+            "Hammer Curl",
+            "Preacher Curl",
+            "Concentration Curl"
+        ],
+        "quads": [
+            "Squats",
+            "Leg Press",
+            "Lunges",
+            "Leg Extension"
+        ],
+        "calves": [
+            "Standing Calf Raise",
+            "Seated Calf Raise",
+            "Calf Press on Leg Press Machine",
+            "Donkey Calf Raise"
+        ],
+        "abs": [
+            "Crunches",
+            "Plank",
+            "Russian Twist",
+            "Leg Raises"
+        ]
+    }
+}
