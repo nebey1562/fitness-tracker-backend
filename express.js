@@ -1,6 +1,6 @@
 const express=require('express');
 const app=express();
-
+const cors = require('cors');
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 
@@ -9,6 +9,7 @@ conn.dbConnection();
 
 
 const traineeRoutes=require('./routes/Training');
+app.use(cors());
 app.use("/api/v1/fitness",traineeRoutes);
 
 app.use("/*",(req,res)=>{
