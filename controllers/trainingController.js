@@ -2,6 +2,28 @@ const fs=require('fs');
 const Log=require('../models/logWorkout');
 const ExerciseList = require('../models/excerciseSelector')
 
+
+const updateExercise = async (req, res) => {
+    try {
+        const { date, weight, reps } = req.body;
+        if (!date || !weight || !reps) {
+            return res.status(400).json({
+                message: 'All fields (date, weight, reps) are required.'
+            });
+        }
+        const workoutLog = await Log.findOne({ date: new Date(date) });
+        if (!workoutLog) {
+            return res.status(404).json({ message: 'Workout log not found for the given date' });
+        }
+        workoutLog.weight = weight;
+        workoutLog.reps = reps;
+        await workoutLog.save();
+        res.status(200).json({ message: 'Workout updated successfully', workoutLog });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
 const logExercise = async (req, res) => {
     try {
         const { exercise, weight, reps, muscleGroup } = req.body;
@@ -71,6 +93,7 @@ module.exports={
     getExercises,
     logExercise,
     viewAllWorkouts,
-    getMuscleGroups
+    getMuscleGroups,
+    updateExercise
 
 }
